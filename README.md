@@ -45,14 +45,16 @@ Clone `genie-tookit` and checkout tag `emnlp2020-autoqa-camera-ready`.
 Follow its [installation guide](https://github.com/stanford-oval/genie-toolkit/blob/emnlp2020-autoqa-camera-ready/doc/install.md) 
 option 1 to install it.
 
-Clone this repository and set `geniedir` in Makefile to be where you installed Genie, and run the following command 
+Clone this repository and run the following command 
 ```bash
 # replace $(experiment) with the domain name
-make experiment=$(experiment) evaluate
+# replace $(name) to the name of your model (to name the result file)
+# replace $(path) to the path to your model directory 
+make experiment=$(experiment) model_name=$(name) model_path=$(path) evaluate
 ```
 
 
-## Leaderboard 
+## Leader board 
 |                                                                                           | restaurants | people | movies | books | music | hotels | average |
 | ----------------------------------------------------------------------------------------- | ----------- | ------ | ------ | ----- | ----- | ------ | ------- |
 | [Schema2QA](https://almond-static.stanford.edu/papers/schema2qa-cikm2020.pdf)             | 69.7%       | 75.2%  | 70.0%  | 70.0% | 63.9% | 67.0%  | 69.3%   |
