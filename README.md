@@ -47,12 +47,24 @@ option 1 to install it.
 
 Clone this repository and run the following command 
 ```bash
-# replace $(experiment) with the domain name
-# replace $(name) to the name of your model (to name the result file)
-# replace $(path) to the path to your model directory 
-make experiment=$(experiment) model_name=$(name) model_path=$(path) evaluate
+# replace ${experiment} with the domain name
+# replace ${name} to the name of your model (to name the result file)
+# replace ${path} to the path to your model directory 
+make experiment=${experiment} model_name=${name} model_path=${path} evaluate
 ```
 
+The model directory should be a [genienlp](https://github.com/stanford-oval/genienlp) model.
+
+The results will be saved in a file called `${experiment}/eval/${name}.results`. This is a CSV
+file with the following columns:
+- complexity (number of properties in the query)
+- number of examples
+- exact match accuracy
+- accuracy ignoring parameter values
+- accuracy at identifying the right tables
+- accuracy at identifying the right skill
+- accuracy at identifying the number of tables
+- syntax and type-checking accuracy
 
 ## Leader board 
 |                                                                                           | restaurants | people | movies | books | music | hotels | average |

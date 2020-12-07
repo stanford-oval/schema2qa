@@ -4,7 +4,7 @@ model_name ?= 1
 model_path ?=
 
 evaluate: 
-	genie
+	genie evaluate-server
 	  --url "file://$(abspath $(dir $(model_path)))" \
 	  --thingpedia $(experiment)/schema.tt \
 	  $(experiment)/$(eval_set)/annotated.tsv \
