@@ -47,7 +47,7 @@ option 1 to install it.
 
 Clone this repository and set `geniedir` in Makefile to be where you installed Genie, and run the following command 
 ```bash
-% replace $(experiment) with the domain name
+# replace $(experiment) with the domain name
 make experiment=$(experiment) evaluate
 ```
 
