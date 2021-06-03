@@ -19,10 +19,10 @@ synthetic_flags ?= \
 	aggregation \
 	schema_org \
 	filter_join
-human_paraphrase ?= false
+human_paraphrase ?= true
 
 all_annotation_strategies = baseline auto manual
-annotation ?= baseline
+annotation ?= manual
 
 paraphraser_options ?= --paraphraser-model ./models/paraphraser-bart-large-speedup-megabatch-5m --batch-size 32
 
