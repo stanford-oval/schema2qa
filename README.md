@@ -35,8 +35,8 @@ The training sets can be downloaded from the following links:
 - [Schema2QA training set](https://almond-static.stanford.edu/research/schema2qa2.0/autoqa.tar.xz)
 - [AutoQA training set](https://almond-static.stanford.edu/research/schema2qa2.0/schema2qa.tar.xz)
 
-Schema2QA training sets contains examples synthesized with manual annotations as well as 
-human paraphrase, while AutoQA training sets is fully synthesized with automatically generated 
+Schema2QA training set contains examples synthesized with manual annotations as well as 
+human paraphrase, while AutoQA training set is fully synthesized with automatically generated 
 annotations and neural paraphrases using [AutoQA](https://almond-static.stanford.edu/papers/autoqa-emnlp2020.pdf). 
 Both datasets are augmented with the same parameter value dataset. 
  
@@ -53,7 +53,7 @@ Both datasets are augmented with the same parameter value dataset.
 | -------------------------- | ----------- | ------- | ------- | ------- | ------- | ------- | ------- |
 | Synthetic                  | 165,634     | 165,634 | 165,634 | 165,634 | 165,634 | 165,634 | 165,634 |
 | Auto Paraphrase (filtered) | 205,867     | 163,467 | 164,342 | 188,259 | 202,870 | 220,428 | 190,872 |
-| Total (after augmentation) | 371,501     | 329,101 | 329,976 | 353,893 | 368,504 | 386,062 | 356,506 |
+| Total                      | 371,501     | 329,101 | 329,976 | 353,893 | 368,504 | 386,062 | 356,506 |
 
 #### Evaluation: 
 |            | restaurants | people | movies | books | music | hotels | average |
@@ -64,7 +64,7 @@ Both datasets are augmented with the same parameter value dataset.
 ## Leader board 
 All numbers are evaluated on the Schema2QA test set which is not included in this repository. 
 Please contact us at mobisocial@lists.stanford.edu to evaluate your model(s) on the test data.
-Note that the accuracy is now different from what we reported in our papers as the dataset changed. 
+Note that the accuracy is now different from what we reported in our papers as the dataset has changed. 
 #### Schema2QA
 |                                                                                 | restaurants | people | movies | books | music | hotels | average |
 | --------------------------------------------------------------------------------| ----------- | ------ | ------ | ----- | ----- | ------ | ------- |
@@ -82,8 +82,7 @@ Note that the accuracy is now different from what we reported in our papers as t
 ## Run synthesis and evaluation
 This repository also contains the Makefile to run the full data synthesis, training, 
 and evaluation of Schema2QA dataset. 
-Follow instructions in [install.md](./doc/install.md) and [run.md](./doc/run.md) for
-more details. 
+Detailed instructions can be found in [install.md](./doc/install.md) and [run.md](./doc/run.md).
 
 ## License
 The dataset is released under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
