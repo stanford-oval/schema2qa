@@ -42,12 +42,18 @@ Both datasets are augmented with the same parameter value dataset.
  
 ## Statistics  
 #### Schema2QA Training:
-(to be updated...)
 |                            | restaurants | people  | movies  | books   | music   | hotels  | average |
 | -------------------------- | ----------- | ------- | ------- | ------- | ------- | ------- | ------- |
-| Synthetic                  | 270,081     | 270,081 | 270,081 | 270,081 | 270,081 | 270,081 | 270,081 |
+| Synthetic                  | 165,634     | 165,634 | 165,634 | 165,634 | 165,634 | 165,634 | 165,634 |
 | Human Paraphrase           | 6,419       | 7,108   | 3,774   | 3,941   | 3,626   | 3,311   | 4,697   |
-| Total (after augmentation) | 508,101     | 614,841 | 405,241 | 410,141 | 425,041 | 377,341 | 456,784 |
+| Total (after augmentation) | 477,934     | 541,034 | 292,434 | 305,694 | 322,554 | 302,414 | 373,677 |
+
+#### AutoQA Training 
+|                            | restaurants | people  | movies  | books   | music   | hotels  | average |
+| -------------------------- | ----------- | ------- | ------- | ------- | ------- | ------- | ------- |
+| Synthetic                  | 165,634     | 165,634 | 165,634 | 165,634 | 165,634 | 165,634 | 165,634 |
+| Auto Paraphrase (filtered) | 205,867     | 163,467 | 164,342 | 188,259 | 202,870 | 220,428 | 190,872 |
+| Total (after augmentation) | 371,501     | 329,101 | 329,976 | 353,893 | 368,504 | 386,062 | 356,506 |
 
 #### Evaluation: 
 |            | restaurants | people | movies | books | music | hotels | average |
@@ -62,7 +68,7 @@ Note that the accuracy is now different from what we reported in our papers as t
 #### Schema2QA
 |                                                                                 | restaurants | people | movies | books | music | hotels | average |
 | --------------------------------------------------------------------------------| ----------- | ------ | ------ | ----- | ----- | ------ | ------- |
-| [BART](https://arxiv.org/pdf/2009.07968.pdf)                                    | 73.3%       | 81.2%  | 86.6%  | 63.1% | 66.1% | 69.5%  | 73.8%   |
+| [BART](https://arxiv.org/pdf/2009.07968.pdf)                                    | 73.3%       | 80.0%  | 81.7%  | 72.5% | 70.3% | 69.5%  | 74.5%   |
 | [BERT-LSTM](https://almond-static.stanford.edu/papers/schema2qa-cikm2020.pdf)   | 69.7%       | 75.2%  | 70.0%  | 70.0% | 63.9% | 67.0%  | 69.3%   |
 
 #### AutoQA
