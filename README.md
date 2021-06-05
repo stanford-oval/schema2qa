@@ -52,7 +52,7 @@ Note that the accuracy is now different from what we reported in our papers as t
 |                                                                                 | restaurants | people | movies | books | music | hotels | average |
 | --------------------------------------------------------------------------------| ----------- | ------ | ------ | ----- | ----- | ------ | ------- |
 | [BART](https://arxiv.org/pdf/2009.07968.pdf)                                    | 73.3%       | 80.0%  | 81.7%  | 72.5% | 70.3% | 69.5%  | 74.5%   |
-| [BERT-LSTM](https://almond-static.stanford.edu/papers/schema2qa-cikm2020.pdf)   | TBU%       | TBU%  | TBU%  | TBU% | TBU% | TBU%  | TBU%   |
+| [BERT-LSTM](https://almond-static.stanford.edu/papers/schema2qa-cikm2020.pdf)   | 64.3%       | 73.8%  | 66.8%  | 46.7% | 58.0% | 55.9%  | 60.9%   |
 
 #### AutoQA
 |                                                                                 | restaurants | people | movies | books | music | hotels | average |
