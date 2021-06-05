@@ -17,10 +17,11 @@ a small fraction of human paraphrase data.
 
 ## What's new in 2.0
 The main difference is that all the examples in the dataset has been reannotated 
-with ThingTalk 2.0. This is a major redesign of the language to make it more accessible,
+with [ThingTalk 2.0](https://github.com/stanford-oval/thingtalk/tree/v2.0.0). 
+This is a major redesign of the language to make it more accessible,
 less verbose, and more compatible with pre-trained neural network. 
 More details about the changes can be found in the [release history](https://github.com/stanford-oval/thingtalk/blob/master/HISTORY.md).
-The synthetic data is regenerated with latest Genie (v.0.8.0) using the ThingTalk 2.0, 
+The synthetic data is regenerated with latest [Genie v0.8.0](https://github.com/stanford-oval/genie-toolkit/tree/v0.8.0), 
 with improvement over both quality and efficiency. 
 There are also minor annotation fixes, duplicated examples removed in the evaluation set. 
 So the size of evaluation set is actually smaller, but the diversity remains the same. 
