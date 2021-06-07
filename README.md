@@ -41,26 +41,15 @@ You can still find information about Schema2QA 1.0 [here](./doc/1.0.md).
 However, we do not recommend using Schema2QA 1.0 any more as it contains outdated ThingTalk 
 annotation. 
 
-## Download links
-Validation data can be found under directories of each domain in this git repository.
-The training sets can be downloaded from the following links:
-- [Schema2QA training set](https://almond-static.stanford.edu/research/schema2qa2.0/autoqa.tar.xz)
-- [AutoQA training set](https://almond-static.stanford.edu/research/schema2qa2.0/schema2qa.tar.xz)
-
-There are two versions of training data:
-the original Schema2QA training set contains examples synthesized with manual annotations as well as 
-human paraphrase, while AutoQA training set is fully synthesized with automatically generated 
-annotations and neural paraphrases introduced in [AutoQA](https://almond-static.stanford.edu/papers/autoqa-emnlp2020.pdf). 
-Both datasets are augmented with the same parameter value dataset. 
-
-Detailed statistics of the dataset can be found in the [stats page](doc/stats.md).
-
-## Leader board 
+## Leaderboard 
 All numbers are evaluated on the Schema2QA test set which is not included in this repository. 
 Please contact us at mobisocial@lists.stanford.edu to evaluate your model(s) on the test data.
 Accuracy on dev set can be found [here](doc/dev.md).
 Note that the accuracy is now different from what we reported in our papers as the dataset has changed. 
 #### Schema2QA
+Trained with the full Schema2QA training data, including synthetic data using manual natural language 
+annotations of the Schema.org properties, and human paraphrase data. Both are augmented with crawled
+real property values.
 
 Rank | Model                                                                           | Restaurants | People | Movies | Books | Music | Hotels | Average |
 ---- | --------------------------------------------------------------------------------| ----------- | ------ | ------ | ----- | ----- | ------ | ------- |
@@ -68,6 +57,8 @@ Rank | Model                                                                    
 2    | [BERT-LSTM](https://dl.acm.org/doi/abs/10.1145/3340531.3411974) <br /> Stanford | 64.3%       | 73.8%  | 66.8%  | 46.7% | 58.0% | 55.9%  | 60.9%   |
 
 #### AutoQA
+Trained with dataset fully synthesized with [AutoQA](https://almond-static.stanford.edu/papers/autoqa-emnlp2020.pdf),
+using automatically generated natural language annotations and a neural paraphraser. 
 
 Rank | Model                                                                           | Restaurants | People | Movies | Books | Music | Hotels | Average |
 ---- | --------------------------------------------------------------------------------| ----------- | ------ | ------ | ----- | ----- | ------ | ------- |
@@ -75,6 +66,14 @@ Rank | Model                                                                    
 2    | [BERT-LSTM](https://dl.acm.org/doi/abs/10.1145/3340531.3411974) <br /> Stanford | 62.6%       | 58.4%  | 60.4%  | 44.0% | 50.3% | 60.4%  | 56.0%   |
 
 
+
+## Download links
+Validation data can be found under directories of each domain in this git repository.
+The training sets can be downloaded from the following links:
+- [Schema2QA training set](https://almond-static.stanford.edu/research/schema2qa2.0/autoqa.tar.xz)
+- [AutoQA training set](https://almond-static.stanford.edu/research/schema2qa2.0/schema2qa.tar.xz)
+
+Detailed statistics of the dataset can be found in the [stats page](doc/stats.md).
  
 ## Getting started
 This repository also contains the Makefile to run the full data synthesis, training, 
@@ -85,7 +84,7 @@ Detailed instructions can be found in [installation](./doc/install.md) and [run]
 The dataset is released under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 Please cite the following papers if use this dataset in your work:
 ```bib
-% evaluation and human paraphrase data
+% Schema2QA & BERT-LSTM model
 @inproceedings{xu2020schema2qa,
   title={Schema2QA: High-Quality and Low-Cost Q\&A Agents for the Structured Web},
   author={Xu, Silei and Campagna, Giovanni and Li, Jian and Lam, Monica S},
@@ -94,7 +93,7 @@ Please cite the following papers if use this dataset in your work:
   year={2020}
 }
 
-% auto paraphrase data
+% AutoQA 
 @inproceedings{xu2020autoqa,
   title={AutoQA: From Databases to Q\&A Semantic Parsers with Only Synthetic Training Data},
   author={Xu, Silei and Semnani, Sina and Campagna, Giovanni and Lam, Monica},
@@ -103,7 +102,7 @@ Please cite the following papers if use this dataset in your work:
   year={2020}
 }
 
-% BART model
+% BART parser
 @article{campagna2020skim,
   title={SKIM: Few-Shot Conversational Semantic Parsers with Formal Dialogue Contexts},
   author={Campagna, Giovanni and Semnani, Sina J and Kearns, Ryan and Sato, Lucas Jun Koba and Xu, Silei and Lam, Monica S},
