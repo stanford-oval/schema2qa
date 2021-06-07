@@ -1,4 +1,4 @@
 theme: jekyll-theme-minimal
-title: Schema2QA 
-description: A large question answering dataset on Schema.org data with realistic evaluation questions
-show_downloads: true
+title: Schema2QA 2.0
+description: A large-scale question answering dataset on real-world Schema.org data
+show_downloads: false

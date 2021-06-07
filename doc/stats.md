@@ -1,5 +1,6 @@
 # Statistics of Schema2QA 2.0 dataset
 #### Schema2QA Training:
+
 |                            | restaurants | people  | movies  | books   | music   | hotels  | average |
 | -------------------------- | ----------- | ------- | ------- | ------- | ------- | ------- | ------- |
 | Synthetic                  | 165,634     | 165,634 | 165,634 | 165,634 | 165,634 | 165,634 | 165,634 |
@@ -7,6 +8,7 @@
 | Total (after augmentation) | 477,934     | 541,034 | 292,434 | 305,694 | 322,554 | 302,414 | 373,677 |
 
 #### AutoQA Training 
+
 |                            | restaurants | people  | movies  | books   | music   | hotels  | average |
 | -------------------------- | ----------- | ------- | ------- | ------- | ------- | ------- | ------- |
 | Synthetic                  | 165,634     | 165,634 | 165,634 | 165,634 | 165,634 | 165,634 | 165,634 |
@@ -14,6 +16,7 @@
 | Total                      | 371,501     | 329,101 | 329,976 | 353,893 | 368,504 | 386,062 | 356,506 |
 
 #### Evaluation: 
+
 |            | restaurants | people | movies | books | music | hotels | average |
 | ---------- | ----------- | ------ | ------ | ----- | ----- | ------ | ------- |
 | Validation | 528         | 499    | 380    | 360   | 312   | 443    | 420.3   |

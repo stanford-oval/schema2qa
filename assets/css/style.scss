@@ -4,14 +4,14 @@
 @import "{{ site.theme }}";
 
 .wrapper {
-    width: 960px; 
+    width: 1020px; 
 }
 
 section {
-    width: 600px;
+    width: 660px;
 }
 
-@media print, screen and (max-width: 1080px) {
+@media print, screen and (max-width: 1140px) {
     .wrapper {
         width: 860px;
     }

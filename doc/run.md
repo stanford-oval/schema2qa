@@ -28,7 +28,7 @@ make datadir experiment=people # change this to the domain you want
 To synthesize AutoQA dataset, with no manual annotation nor human paraphrase, 
 run the command with additional options to enable AutoQA and disable human paraphrase 
 as follows:
-```
+```bash
 make datadir experiment=people annotation=auto human_paraphrase=false auto_paraphrase=true
 ```
 
@@ -38,7 +38,7 @@ rerun `make datadir`.
 
 ## Training 
 To run training, simply run 
-```
+```bash
 make train 
 ```
 Similar to `make datadir`, one can append `experiment` option to choose a different domain 
