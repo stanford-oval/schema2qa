@@ -1,1 +1,4 @@
 theme: jekyll-theme-minimal
+title: Schema2QA 
+description: A large question answering dataset on Schema.org data with realistic evaluation questions
+show_downloads: true

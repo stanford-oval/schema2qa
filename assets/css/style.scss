@@ -1,0 +1,28 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+.wrapper {
+    width: 960px; 
+}
+
+section {
+    width: 600px;
+}
+
+@media print, screen and (max-width: 1080px) {
+    .wrapper {
+        width: 860px;
+    }
+
+    section {
+        width: 500px;
+    }
+}
+
+@media print, screen and (max-width: 960px) {
+    section {
+        width: auto;
+    }
+}
