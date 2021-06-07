@@ -16,6 +16,15 @@ Thus, the sentences are natural and diverse. They also contain entities unseen d
 The collected sentences are manually annotated with ThingTalk by the authors. 
 In total there are __over 5,000 examples for dev and test__. 
 
+An example of an evaluation question and its ThingTalk annotation is shown below:
+
+_"What are the highest ranked burger joints in the 40 mile area around Asheville NC?"_
+```js
+sort(aggregateRating.ratingValue desc of @org.schema.Restaurant.Restaurant() 
+  filter distance(geo, new Location("asheville nc" )) <= 40 mi && 
+         servesCuisine =~ "burger")[1] ;
+```
+
 ## What's new in 2.0
 The main difference is that all the examples in the dataset has been reannotated 
 with [ThingTalk 2.0](https://github.com/stanford-oval/thingtalk/tree/v2.0.0). 
@@ -67,7 +76,7 @@ Rank | Model                                                                    
 
 
  
-## Run synthesis and evaluation
+## Getting started
 This repository also contains the Makefile to run the full data synthesis, training, 
 and evaluation of Schema2QA dataset. 
 Detailed instructions can be found in [installation](./doc/install.md) and [run](./doc/run.md) instructions.
