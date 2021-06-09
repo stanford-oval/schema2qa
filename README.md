@@ -70,8 +70,8 @@ Rank | Model                                                                    
 ## Download links
 Validation data can be found under directories of each domain in this git repository.
 The training sets can be downloaded from the following links:
-- [Schema2QA training set](https://almond-static.stanford.edu/research/schema2qa2.0/autoqa.tar.xz)
-- [AutoQA training set](https://almond-static.stanford.edu/research/schema2qa2.0/schema2qa.tar.xz)
+- [Schema2QA training set (29.8 MB)](https://almond-static.stanford.edu/research/schema2qa2.0/autoqa.tar.xz)
+- [AutoQA training set (28.5 MB)](https://almond-static.stanford.edu/research/schema2qa2.0/schema2qa.tar.xz)
 
 Detailed statistics of the dataset can be found in the [stats page](doc/stats.md).
  
