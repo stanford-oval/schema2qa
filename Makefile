@@ -99,8 +99,8 @@ train_nlu_flags ?= \
 	--model TransformerSeq2Seq \
 	--pretrained_model facebook/bart-large \
 	--eval_set_name eval \
-	--train_batch_tokens 350 \
-	--val_batch_size 400 \
+	--train_batch_tokens 3500 \
+	--val_batch_size 4000 \
 	--preprocess_special_tokens \
 	--warmup 800 \
 	--lr_multiply 0.01 \
@@ -382,6 +382,8 @@ evaluate: $(experiment)/models/${model}/best.pth $(experiment)/$(eval_set)/annot
 
 clean:
 	rm -rf datadir
+	rm -rf datadir_paraphrased
+	rm -rf datadir_filtered
 	for exp in $(all_experiments) ; do \
 		rm -rf $$exp/synthetic* $$exp/data.json $$exp/entities.json $$exp/parameter-datasets* \
 		  $$exp/schema.tt $$exp/manifest.tt $$exp/schema.trimmed.tt $$exp/augmented.tsv \
