@@ -23,7 +23,8 @@ human_paraphrase ?= true
 
 all_annotation_strategies = baseline auto manual
 annotation ?= manual
-datadir ?= datadir # can be one of datadir, datadir_paraphrased or datadir_filtered
+# can be one of datadir, datadir_paraphrased or datadir_filtered
+datadir ?= datadir
 
 paraphraser_options ?= --paraphraser-model ./models/paraphraser-bart-large-speedup-megabatch-5m --batch-size 32
 
