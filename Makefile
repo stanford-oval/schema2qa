@@ -2,8 +2,6 @@ geniedir ?= $(HOME)/genie-toolkit
 thingpedia_url = https://almond-dev.stanford.edu/thingpedia
 developer_key ?=
 
--include ./config.mk
-
 memsize := 12000
 genie = node --experimental_worker --max_old_space_size=$(memsize) $(geniedir)/dist/tool/genie.js
 
@@ -110,7 +108,7 @@ train_nlu_flags ?= \
 paraphrasing_flags ?= \
 	--temperature 0 0.3 0.5 0.7 1.0 \
 	--top_p 0.9 \
-	--val_batch_size 6000
+	--val_batch_size 4000
 custom_train_nlu_flags ?=
 
 .PHONY: clean datadir train 
@@ -251,13 +249,13 @@ datadir: $(experiment)/everything.tsv $(experiment)/eval/annotated.tsv
 	mkdir -p $@
 	cp $(experiment)/everything.tsv $@/train.tsv
 	cut -f1-3 < $(experiment)/eval/annotated.tsv > $@/eval.tsv
+	rm -rf $@/almond
+	ln -sf . $@/almond
 	touch $@
 
 # AutoQA dataset creation (train filter)
 train_filter: datadir
 	mkdir -p $(experiment)/models/$(model)-filter
-	rm -rf datadir/almond
-	ln -sf . datadir/almond
 	genienlp train \
 	  --no_commit \
 	  --data datadir \
@@ -296,7 +294,7 @@ datadir_paraphrased: datadir models/paraphraser-bart-large-speedup-megabatch-5m-
         --overwrite \
         --skip_cache \
         --silent \
-        $(paraphrasing_arguments)
+        $(paraphrasing_flags)
 	mv paraphraser_output/train/* $@/
 	rm -r paraphraser_output/
 	
@@ -326,7 +324,7 @@ datadir_filtered: datadir_paraphrased train_filter
 		--silent \
 		--main_metric_only \
 		--skip_cache \
-		--val_batch_size 6000 \
+		--val_batch_size 4000 \
 
 	# remove paraphrases that do not preserve the meaning according to the parser
 	genienlp transform-dataset \
