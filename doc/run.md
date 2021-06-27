@@ -43,13 +43,17 @@ rerun `make datadir`.
 
 ### AutoQA (w/ automatic paraphrasing)
 
-You can automatically paraphrase any dataset using a neural paraphrasing model. If you paraphrase the dataset from the previous step, you will obtain the fully automatic dataset described in the [AutoQA](https://arxiv.org/abs/2010.04806) paper.
+You can automatically paraphrase any dataset using a neural paraphrasing model. If you paraphrase the dataset from the previous step, you will obtain the fully automatic dataset described in the [AutoQA](https://almond-static.stanford.edu/papers/autoqa-emnlp2020.pdf) paper.
 
 Running the following command will paraphrase the dataset in `datadir` and write two resulting datasets into `datadir_paraphrased` and `datadir_filtered`. The latter is the former after filtering is applied.
 
 ```bash
 make datadir_filtered
 ```
+
+`datadir_paraphrased` folder will contain an additional file `almond_paraphrase.results.json`, which includes the average self-BLEU score of paraphrased examples (the lower the self-BLEU, the more different the paraphrases are from the original dataset). Another file is `almond_paraphrase.tsv` which contains the raw output of the automatic paraphraser; its two columns are example id and  the paraprhased sentence).
+
+`datadir_filtered` folder will contain `pass-rate.json`which contains the percentage of paraphrases that passed through the filter.
 
 ## Training
 
@@ -67,7 +71,6 @@ This automatically trains the BART model proposed in [SKIM](https://arxiv.org/ab
 which is currently the state-of-the-art model on Schema2QA benchmark.
 The default setting is under `train_nlu_flags` in the Makefile. You can either tweak
 the hyperparameters directly, or append additional flags using `custom_train_nlu_flags`.
-
 
 ## Evaluation
 
@@ -93,15 +96,12 @@ file with the following columns:
 
 The exact match accuracy is the one reported in the paper and on the leader board.
 
-
 # Compute Requirements
 
 Data synthesis for Schema2QA can be done on a CPU machine, and usually takes less than 1 hour.
 
 However, synthesizing an AutoQA dataset (w/ or w/o automatic paraphrasing), requires GPUs as it involves running a neural paraphraser and training and running a parser for filtering. Depending on the GPU, this can take a couple of hours.
 
-
 Training a parser with default hyperparameters takes around 5 hours on our GPUs.
-
 
 We have tested these commands on an AWS p3.2xlarge machine, which has one 16GB NVIDIA V100 GPU, 8 vCPUs, and 61 GiB of memory. These commands should run out-of-the-box on machines with lower CPU and RAM, but if you are using a GPU with less memory, you might need to decrease `train_batch_tokens` and `val_batch_tokens`accordingly and increase `train_iterations`and `train_filter_iterations` instead.
