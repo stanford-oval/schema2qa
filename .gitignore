@@ -20,4 +20,6 @@ shared-parameter-datasets/
 synthetic*.tsv
 everything.tsv
 datadir/
+datadir_paraphrased/
+datadir_filtered/
 models/

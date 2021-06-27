@@ -2,8 +2,6 @@ geniedir ?= $(HOME)/genie-toolkit
 thingpedia_url = https://almond-dev.stanford.edu/thingpedia
 developer_key ?=
 
--include ./config.mk
-
 memsize := 12000
 genie = node --experimental_worker --max_old_space_size=$(memsize) $(geniedir)/dist/tool/genie.js
 
@@ -23,6 +21,8 @@ human_paraphrase ?= true
 
 all_annotation_strategies = baseline auto manual
 annotation ?= manual
+# can be one of datadir, datadir_paraphrased or datadir_filtered
+datadir ?= datadir
 
 paraphraser_options ?= --paraphraser-model ./models/paraphraser-bart-large-speedup-megabatch-5m --batch-size 32
 
@@ -91,19 +91,24 @@ entity_value_sets = \
 
 model ?= 1
 train_iterations ?= 30000
+train_filter_iterations ?= 8000
 train_save_every ?= 2000
 train_log_every ?= 100
 train_nlu_flags ?= \
 	--model TransformerSeq2Seq \
 	--pretrained_model facebook/bart-large \
 	--eval_set_name eval \
-	--train_batch_tokens 350 \
-	--val_batch_size 400 \
+	--train_batch_tokens 3500 \
+	--val_batch_size 4000 \
 	--preprocess_special_tokens \
 	--warmup 800 \
 	--lr_multiply 0.01 \
 	--override_question= \
 	--preserve_case
+paraphrasing_flags ?= \
+	--temperature 0 0.3 0.5 0.7 1.0 \
+	--top_p 0.9 \
+	--val_batch_size 4000
 custom_train_nlu_flags ?=
 
 .PHONY: clean datadir train 
@@ -114,9 +119,15 @@ common-words.txt:
 
 models/paraphraser-bart-large-speedup-megabatch-5m:
 	mkdir -p models
-	curl -O https://almond-static.stanford.edu/test-data/paraphraser-bart-large-speedup-megabatch-5m.tar.xz
+	curl -O https://almond-static.stanford.edu/research/schema2qa2.0/paraphraser-bart-large-speedup-megabatch-5m.tar.xz
 	tar -C models -xvf paraphraser-bart-large-speedup-megabatch-5m.tar.xz
 	rm paraphraser-bart-large-speedup-megabatch-5m.tar.xz
+
+models/paraphraser-bart-large-speedup-megabatch-5m-newformat:
+	mkdir -p models
+	curl -O https://almond-static.stanford.edu/research/schema2qa2.0/paraphraser-bart-large-speedup-megabatch-5m-newformat.tar.xz
+	tar -C models -xvf paraphraser-bart-large-speedup-megabatch-5m-newformat.tar.xz
+	rm paraphraser-bart-large-speedup-megabatch-5m-newformat.tar.xz
 
 emptydataset.tt:
 	echo 'dataset @empty {}' > $@
@@ -238,19 +249,112 @@ datadir: $(experiment)/everything.tsv $(experiment)/eval/annotated.tsv
 	mkdir -p $@
 	cp $(experiment)/everything.tsv $@/train.tsv
 	cut -f1-3 < $(experiment)/eval/annotated.tsv > $@/eval.tsv
+	rm -rf $@/almond
+	ln -sf . $@/almond
 	touch $@
 
-train: datadir
-	mkdir -p $(experiment)/models/$(model)
-	rm -rf datadir/almond
-	ln -sf . datadir/almond
+# AutoQA dataset creation (train filter)
+train_filter: datadir
+	mkdir -p $(experiment)/models/$(model)-filter
 	genienlp train \
 	  --no_commit \
 	  --data datadir \
 	  --embeddings .embeddings \
+	  --save $(experiment)/models/$(model)-filter \
+	  --tensorboard_dir $(experiment)/models/$(model)-filter \
+	  --cache datadir/.cache \
+	  --train_tasks almond \
+	  --preserve_case \
+	  --train_iterations $(train_filter_iterations) \
+	  --save_every $(train_save_every) \
+	  --log_every $(train_log_every) \
+	  --val_every $(train_save_every) \
+	  --exist_ok \
+	  --skip_cache \
+	  $(train_nlu_flags) \
+	  $(custom_train_nlu_flags)
+
+# AutoQA dataset creation (paraphrase the train set)
+datadir_paraphrased: datadir models/paraphraser-bart-large-speedup-megabatch-5m-newformat
+	# remove duplicates before paraphrasing to avoid wasting effort
+	mkdir -p $@/almond/
+	cp datadir/almond/eval.tsv $@/almond/eval.tsv
+	genienlp transform-dataset \
+		datadir/train.tsv \
+		$@/almond/train.tsv \
+		--remove_duplicates \
+		--task almond
+	# run Autoparaphraser on train.tsv
+	genienlp predict \
+        --task almond_paraphrase \
+        --path models/paraphraser-bart-large-speedup-megabatch-5m-newformat \
+        --data $@ \
+        --eval_dir paraphraser_output \
+        --evaluate train \
+        --overwrite \
+        --skip_cache \
+        --silent \
+        $(paraphrasing_flags)
+	mv paraphraser_output/train/* $@/
+	rm -r paraphraser_output/
+	
+	# join the original file and the paraphrasing output
+	genienlp transform-dataset \
+		$@/almond/train.tsv \
+		$@/train_paraphrased.tsv \
+		--query_file $@/almond_paraphrase.tsv \
+		--transformation replace_queries \
+		--remove_with_heuristics \
+		--task almond
+
+	mv $@/train_paraphrased.tsv $@/almond/train.tsv
+
+# AutoQA dataset creation (filter the paraphrases)
+datadir_filtered: datadir_paraphrased train_filter
+	mkdir -p $@/almond/
+	cp datadir/eval.tsv $@/almond/eval.tsv
+	# get parser output for paraphrased utterances in train set
+	genienlp predict \
+		--data ./datadir_paraphrased \
+		--path $(experiment)/models/$(model)-filter \
+		--eval_dir ./filter_output \
+		--evaluate train \
+		--task almond \
+		--overwrite \
+		--silent \
+		--main_metric_only \
+		--skip_cache \
+		--val_batch_size 4000 \
+
+	# remove paraphrases that do not preserve the meaning according to the parser
+	genienlp transform-dataset \
+		datadir_paraphrased/almond/train.tsv \
+		$@/almond/train.tsv \
+		--thingtalk_gold_file ./filter_output/train/almond.tsv \
+		--transformation remove_wrong_thingtalk \
+		--task almond
+	
+	mv ./filter_output/train/almond.results.json $@/pass-rate.json
+	rm -r ./filter_output
+
+	# append paraphrases to the end of the original training file and remove duplicates
+	cat datadir/almond/train.tsv >> datadir_filtered/almond/train.tsv
+	genienlp transform-dataset \
+		$@/almond/train.tsv \
+		$@/tmp.tsv \
+		--remove_duplicates \
+		--task almond
+	mv $@/tmp.tsv $@/almond/train.tsv
+
+train: $(datadir)
+	mkdir -p $(experiment)/models/$(model)
+	genienlp train \
+	  --no_commit \
+	  --data $(datadir) \
+	  --embeddings .embeddings \
 	  --save $(experiment)/models/$(model) \
 	  --tensorboard_dir $(experiment)/models/$(model) \
-	  --cache datadir/.cache \
+	  --cache $(datadir)/.cache \
 	  --train_tasks almond \
 	  --preserve_case \
 	  --train_iterations $(train_iterations) \
@@ -277,6 +381,8 @@ evaluate: $(experiment)/models/${model}/best.pth $(experiment)/$(eval_set)/annot
 
 clean:
 	rm -rf datadir
+	rm -rf datadir_paraphrased
+	rm -rf datadir_filtered
 	for exp in $(all_experiments) ; do \
 		rm -rf $$exp/synthetic* $$exp/data.json $$exp/entities.json $$exp/parameter-datasets* \
 		  $$exp/schema.tt $$exp/manifest.tt $$exp/schema.trimmed.tt $$exp/augmented.tsv \
