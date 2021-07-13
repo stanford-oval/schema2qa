@@ -96,7 +96,7 @@ file with the following columns:
 
 The exact match accuracy is the one reported in the paper and on the leader board.
 
-# Compute Requirements
+## Compute Requirements
 
 Data synthesis for Schema2QA can be done on a CPU machine, and usually takes less than 1 hour.
 
