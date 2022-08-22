@@ -103,10 +103,16 @@ Please cite the following papers if use this dataset in your work:
 }
 
 % BART parser
-@article{campagna2020skim,
-  title={SKIM: Few-Shot Conversational Semantic Parsers with Formal Dialogue Contexts},
-  author={Campagna, Giovanni and Semnani, Sina J and Kearns, Ryan and Sato, Lucas Jun Koba and Xu, Silei and Lam, Monica S},
-  journal={arXiv preprint arXiv:2009.07968},
-  year={2020}
+@inproceedings{campagna-etal-2022-shot,
+    title={A Few-Shot Semantic Parser for {W}izard-of-{O}z Dialogues with the Precise {T}hing{T}alk Representation},
+    author={Campagna, Giovanni  and Semnani, Sina  and Kearns, Ryan  and Koba Sato, Lucas Jun  and Xu, Silei  and Lam, Monica},
+    booktitle={Findings of the Association for Computational Linguistics: ACL 2022},
+    pages={4021--4034},
+    month={may},
+    year={2022},
+    address={Dublin, Ireland},
+    publisher={Association for Computational Linguistics},
+    url={https://aclanthology.org/2022.findings-acl.317},
+    doi={10.18653/v1/2022.findings-acl.317},
 }
 ```
